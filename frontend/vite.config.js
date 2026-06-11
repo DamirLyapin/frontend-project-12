@@ -4,8 +4,11 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  build: {
+    outDir: 'build',
+  },
   server: {
-    port: 5002,
+    port: 5001,
     proxy: {
       // Проксируем запросы к API
       '/api': {
