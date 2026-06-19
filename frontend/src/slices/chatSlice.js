@@ -37,6 +37,9 @@ const chatSlice = createSlice({
     setCurrentChannel(state, action) {
       state.currentChannelId = action.payload;
     },
+    addMessage(state, action) {
+        state.messages.push(action.payload)
+    },
   },
 
   extraReducers: (builder) => {
@@ -59,7 +62,7 @@ const chatSlice = createSlice({
   },
 });
 
-export const { setCurrentChannel } =
+export const { setCurrentChannel, addMessage } =
   chatSlice.actions;
 
 export default chatSlice.reducer;

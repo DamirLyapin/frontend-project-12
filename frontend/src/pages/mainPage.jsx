@@ -1,3 +1,23 @@
+import { useEffect } from "react"
+import { useDispatch } from "react-redux"
+
+import socket from "../socket"
+import { addMessage } from "../slices/chatSlice"
+
 export const MainPage = () => {
-    return
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        socket.on('newMessage', (payload) => {
+            dispatch(addMessage(payload))
+        })
+        return () => {
+            socket.off('newMessage')
+        }
+    }, [dispatch])
+    return (
+        <div>
+            Chat
+        </div>
+    )
 }
