@@ -4,6 +4,9 @@ import { useDispatch } from "react-redux"
 import socket from "../socket"
 import { addMessage } from "../slices/chatSlice"
 
+import { MessageForm } from "../Components/MessageForm"
+import { Messages } from "../Components/Messages"
+
 export const MainPage = () => {
     const dispatch = useDispatch()
 
@@ -17,7 +20,8 @@ export const MainPage = () => {
     }, [dispatch])
     return (
         <div>
-            Chat
+            <Messages />  
+            <MessageForm />
         </div>
     )
 }
