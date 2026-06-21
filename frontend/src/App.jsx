@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { NotFoundPage } from './pages/notFoundPage';
 import { AuthorizationPage } from './pages/authorizationPage';
-import { MainPage } from './pages/mainPage';
+import { MainPage } from './pages/MainPage';
 import { PrivateRoute } from './Components/PrivateRoute';
 
 function App() {
