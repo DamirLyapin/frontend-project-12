@@ -1,53 +1,66 @@
-import { Formik, Form, Field } from 'formik'
+import { Formik, Form, Field } from 'formik';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { login } from '../slices/authSlice';
-import { useNavigate } from 'react-router-dom';
 
 export const AuthorizationPage = () => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    const { error } = useSelector((state) => state.auth);
+  const error = useSelector(
+    (state) => state.auth.error,
+  );
 
-    const handleSubmit = async (values) => {
-        const resultAction = await dispatch(login(values));
+  const loading = useSelector(
+    (state) => state.auth.loading,
+  );
 
-        if (login.fulfilled.match(resultAction)) {
-        navigate('/');
-        }
-    };
+  const handleSubmit = async (values) => {
+    const result = await dispatch(login(values));
 
-    return (
-        <Formik
-        initialValues={{
-            username: '',
-            password: '',
-        }}
-        onSubmit={handleSubmit}
+    if (login.fulfilled.match(result)) {
+      navigate('/');
+    }
+  };
+
+  return (
+    <Formik
+      initialValues={{
+        username: '',
+        password: '',
+      }}
+      onSubmit={handleSubmit}
+    >
+      <Form>
+        <Field
+          name="username"
+          type="text"
+        />
+
+        <Field
+          name="password"
+          type="password"
+        />
+
+        {error && (
+          <div>{error}</div>
+        )}
+
+        <button
+          type="submit"
+          disabled={loading}
         >
-        <Form>
-            <Field
-            name="username"
-            type="text"
-            placeholder="Username"
-            />
+          Войти
+        </button>
 
-            <Field
-            name="password"
-            type="password"
-            placeholder="Password"
-            />
-
-            {error && (
-            <div className="text-danger">
-                {error}
-            </div>
-            )}
-
-            <button type="submit">
-            Войти
-            </button>
-        </Form>
-        </Formik>
-    );
+        <div>
+          Нет аккаунта?{' '}
+          <Link to="/signup">
+            Регистрация
+          </Link>
+        </div>
+      </Form>
+    </Formik>
+  );
 };

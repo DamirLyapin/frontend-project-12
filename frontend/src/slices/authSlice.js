@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { data } from 'react-router-dom';
 
 export const login = createAsyncThunk(
   'auth/login',
@@ -21,6 +22,32 @@ export const login = createAsyncThunk(
   },
 );
 
+export const signup = createAsyncThunk(
+  'auth/signup',
+  async (useRouteLoaderData, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        'api/v1/signup',
+        userData,
+      )
+      localStorage.setItem(
+        'token',
+        response.data.token
+      )
+      localStorage.setItem(
+        'username',
+        response.data.username,
+      )
+      return response.data
+    } catch (error) {
+      if (error.response.status === 409) {
+        return rejectWithValue('Пользователь уже существует')
+      }
+      return rejectWithValue("Ошибка регистрации")
+    }
+  }
+)
+
 const initialState = {
   token: localStorage.getItem('token'),
   isAuth: !!localStorage.getItem('token'),
@@ -34,8 +61,10 @@ const authSlice = createSlice({
   reducers: {
     logout(state) {
       localStorage.removeItem('token');
+      localStorage.removeItem('username')
 
       state.token = null;
+      state.username = null
       state.isAuth = false;
     },
   },
@@ -55,7 +84,25 @@ const authSlice = createSlice({
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      });
+      })
+
+      .addCase(signup.pending, (state) => {
+        state.loading = true
+        state.error = null11
+      })
+
+      .addCase(signup.fulfilled, (state, action) => {
+        state.loading = false
+
+        state.token = action.payload.token
+        state.username = action.payload.username
+        state.isAuth = true
+      })
+
+      .addCase(signup.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+      })
   },
 });
 
