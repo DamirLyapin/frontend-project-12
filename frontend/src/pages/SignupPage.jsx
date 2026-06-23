@@ -4,6 +4,9 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
 import { signup } from '../slices/authSlice'
 import { useNavigate } from 'react-router-dom'
+import { useTransition } from 'react'
+
+const { t } = useTransition()
 
 const schema = yup.object({
     username: yup
@@ -47,37 +50,40 @@ export const SignupPage = () => {
   };
 
   return (
-    <Formik
-      initialValues={{
-        username: '',
-        password: '',
-        confirmPassword: '',
-      }}
-      validationSchema={schema}
-      onSubmit={handleSubmit}
-    >
-      <Form>
-        <Field name="username" />
-        <ErrorMessage name="username" />
+    <div>
+      <h1>{t('signup.title')}</h1>
+      <Formik
+        initialValues={{
+          username: '',
+          password: '',
+          confirmPassword: '',
+        }}
+        validationSchema={schema}
+        onSubmit={handleSubmit}
+      >
+        <Form>
+          <Field name="username" />
+          <ErrorMessage name="username" />
 
-        <Field
-          type="password"
-          name="password"
-        />
-        <ErrorMessage name="password" />
+          <Field
+            type="password"
+            name="password"
+          />
+          <ErrorMessage name="password" />
 
-        <Field
-          type="password"
-          name="confirmPassword"
-        />
-        <ErrorMessage name="confirmPassword" />
+          <Field
+            type="password"
+            name="confirmPassword"
+          />
+          <ErrorMessage name="confirmPassword" />
 
-        {error && <div>{error}</div>}
+          {error && <div>{error}</div>}
 
-        <button type="submit">
-          Зарегистрироваться
-        </button>
-      </Form>
-    </Formik>
+          <button type="submit">
+            {t('signup.submit')}
+          </button>
+        </Form>
+      </Formik>
+    </div>
   );
 };

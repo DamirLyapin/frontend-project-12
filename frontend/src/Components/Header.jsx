@@ -1,9 +1,10 @@
 import { Link, useNavigate } from 'react-router-dom'
-
+import { useTransition } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../slices/authSlice'
 
 export const Header = () => {
+    const { t } = useTransition()
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const isAuth = useSelector(
@@ -17,9 +18,9 @@ export const Header = () => {
 
     return (
         <header>
-            <Link to="/">Hexlet Chat</Link>
+            <Link to="/">{t('appName')}</Link>
             {isAuth && (
-                <button type='button' onClick={handleLogout}>Выйти</button>
+                <button type='button' onClick={handleLogout}>{t('auth.logout')}</button>
             )}
         </header>
     )

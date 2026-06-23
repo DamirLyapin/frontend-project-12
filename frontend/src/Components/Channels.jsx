@@ -2,6 +2,9 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { setCurrentChannel } from '../slices/chatSlice'
 import { openModal } from '../slices/modalSlice'
+import { useTranslation } from 'react-i18next';
+
+const { t } = useTranslation();
 
 export const Channels = () => {
     const dispatch = useDispatch()
@@ -34,7 +37,7 @@ export const Channels = () => {
                                         channelId: channel.id
                                     })
                                 )
-                            }>rename</button>
+                            }>{t('channels.rename')}</button>
                             <button onClick={() =>
                                 dispatch(
                                     openModal({
@@ -42,7 +45,7 @@ export const Channels = () => {
                                         channelId: channel.id
                                     })
                                 )
-                            }>remove</button>
+                            }>{t('channels.remove')}</button>
                         </>
                     )}
                 </div>

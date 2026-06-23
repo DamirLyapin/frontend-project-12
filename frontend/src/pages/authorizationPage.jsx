@@ -4,6 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { login } from '../slices/authSlice';
 
+import { useTranslation } from 'react-i18next';
+
+const { t } = useTranslation();
+
 export const AuthorizationPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -51,13 +55,13 @@ export const AuthorizationPage = () => {
           type="submit"
           disabled={loading}
         >
-          Войти
+          {t('auth.login')}
         </button>
 
         <div>
-          Нет аккаунта?{' '}
+          {t('auth.noAccount')}
           <Link to="/signup">
-            Регистрация
+            {t('auth.signup')}
           </Link>
         </div>
       </Form>

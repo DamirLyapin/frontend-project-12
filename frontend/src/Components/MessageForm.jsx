@@ -3,6 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { sendMessage } from '../slices/chatSlice';
 
+import { useTranslation } from 'react-i18next';
+
+const { t } = useTranslation();
+
 export const MessageForm = () => {
   const dispatch = useDispatch();
 
@@ -42,14 +46,14 @@ export const MessageForm = () => {
         <Field
           name="body"
           type="text"
-          placeholder="Введите сообщение..."
+          placeholder={t('messages.placeholder')}
         />
 
         <button
           type="submit"
           disabled={sendLoading}
         >
-          Отправить
+          {t('messages.send')}
         </button>
       </Form>
     </Formik>
