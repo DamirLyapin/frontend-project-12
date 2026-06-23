@@ -3,12 +3,13 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
-
+import leoProfanity from 'leo-profanity';
 import { renameChannel } from '../slices/chatSlice';
 
 import {
   closeModal,
 } from '../slices/modalSlice';
+import leoProfanity from '../initProfanify';
 
 export const RenameChannelModal = () => {
   const dispatch = useDispatch();
@@ -38,7 +39,7 @@ export const RenameChannelModal = () => {
       .notOneOf(channelNames)
       .required(),
   });
-
+  const cleanName = leoProfanity.clean(values.name)
   const handleSubmit = async (
     values,
     { setSubmitting }
@@ -47,7 +48,7 @@ export const RenameChannelModal = () => {
       await dispatch(
         renameChannel({
           id: channelId,
-          name: values.name,
+          name: cleanName,
         }),
       ).unwrap();
 

@@ -9,6 +9,8 @@ import { useTranslation } from 'react-i18next';
 import {
   closeModal,
 } from '../slices/modalSlice';
+import leoProfanity from 'leo-profanity';
+
 
 export const AddChannelModal = () => {
   const dispatch = useDispatch();
@@ -30,14 +32,14 @@ export const AddChannelModal = () => {
       .notOneOf(channelNames)
       .required(),
   });
-
+  const cleanName = leoProfanity.clean(values.name)
   const handleSubmit = async (
     values,
     { setSubmitting }
   ) => {
     try {
       const channel = await dispatch(
-        addChannel(values.name),
+        addChannel(cleanName),
       ).unwrap();
 
       dispatch(

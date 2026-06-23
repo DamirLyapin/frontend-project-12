@@ -1,6 +1,6 @@
 import { Formik, Form, Field } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-
+import leoProfanity from 'leo-profanity';
 import { sendMessage } from '../slices/chatSlice';
 
 import { useTranslation } from 'react-i18next';
@@ -18,14 +18,14 @@ export const MessageForm = () => {
   );
 
   const username = localStorage.getItem('username');
-
+  const cleanMessage = leoProfanity.clean(values.body);
   const handleSubmit = async (
     values,
     { resetForm },
   ) => {
     await dispatch(
       sendMessage({
-        body: values.body,
+        body: cleanMessage,
         channelId: currentChannelId,
         username,
       }),
