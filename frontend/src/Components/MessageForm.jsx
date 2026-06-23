@@ -5,9 +5,8 @@ import { sendMessage } from '../slices/chatSlice';
 
 import { useTranslation } from 'react-i18next';
 
-const { t } = useTranslation();
-
 export const MessageForm = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const currentChannelId = useSelector(

@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 import { NotFoundPage } from './pages/notFoundPage';
 import { AuthorizationPage } from './pages/authorizationPage';
 import { MainPage } from './pages/MainPage';
@@ -16,6 +17,7 @@ function App() {
         <Route path="*" element={<NotFoundPage />} />
         <Route path="/signup" element={<SignupPage />}/>
       </Routes>
+      <ToastContainer />
     </BrowserRouter>
   );
 }

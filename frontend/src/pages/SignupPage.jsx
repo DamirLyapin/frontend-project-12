@@ -4,10 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
 import { signup } from '../slices/authSlice'
 import { useNavigate } from 'react-router-dom'
-import { useTransition } from 'react'
-
-const { t } = useTransition()
-
+import { useTranslation } from 'react-i18next'
 const schema = yup.object({
     username: yup
         .string()
@@ -28,6 +25,8 @@ const schema = yup.object({
 })
 
 export const SignupPage = () => {
+  const { t } = useTranslation()
+
   const dispatch = useDispatch();
 
   const navigate = useNavigate();

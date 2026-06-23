@@ -1,8 +1,7 @@
 import { useTranslation } from 'react-i18next';
 
-const { t } = useTranslation();
-
 export const NotFoundPage = () => {
+    const { t } = useTranslation();
     return (
         <div className="text-center align-middle">
             <h1>{t('notFound.title')}</h1>

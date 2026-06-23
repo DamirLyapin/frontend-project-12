@@ -6,9 +6,8 @@ import { login } from '../slices/authSlice';
 
 import { useTranslation } from 'react-i18next';
 
-const { t } = useTranslation();
-
 export const AuthorizationPage = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

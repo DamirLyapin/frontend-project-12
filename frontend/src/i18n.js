@@ -30,6 +30,11 @@ const resources = {
                 add: 'Добавить канал',
                 remove: 'Удалить',
                 rename: 'Переименовать',
+                confirmRemove: 'Уверены?'
+            },
+
+            common: {
+                cancel: "Отменить"
             },
 
             messages: {
@@ -41,6 +46,14 @@ const resources = {
                 title: '404',
                 text: 'Страница не найдена',
             },
+            toast: {
+                channelCreated: 'Канал создан',
+                channelRemoved: 'Канал удалён',
+                channelRenamed: 'Канал переименован',
+
+                networkError: 'Ошибка соединения',
+                loadError: 'Не удалось загрузить данные',
+            }
         },
     },
 };

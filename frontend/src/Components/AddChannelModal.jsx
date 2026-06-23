@@ -4,52 +4,83 @@ import {
   addChannel,
   setCurrentChannel,
 } from '../slices/chatSlice';
-
+import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 import {
   closeModal,
 } from '../slices/modalSlice';
 
-const schema = yup.object({
-    name: yup
-        .string()
-        .min(3)
-        .max(20)
-        .notOneOf(channelNames)
-        .required()
-})
-
-const handleSubmit = async (
-  values,
-  { setSubmitting }
-) => {
-  try {
-    const result = await dispatch(
-      addChannel(values.name)
-    ).unwrap();
-
-    dispatch(setCurrentChannel(result.id));
-    dispatch(closeModal());
-  } catch (error) {
-    console.error(error);
-  } finally {
-    setSubmitting(false);
-  }
-};
-
 export const AddChannelModal = () => {
-    return (
-        <Formik
-            initialValues={{
-                name: '',
-            }}
-            validationSchema={schema}
-            onSubmit={handleSubmit}>
-                <Form>
-                    <Field name="name" />
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
 
-                    <ErrorMessage name='name' />
-                    <button type='submit'>Отправить</button>
-                </Form>
-            </Formik>
-    )
-}
+  const channels = useSelector(
+    (state) => state.chat.channels,
+  );
+
+  const channelNames = channels.map(
+    (channel) => channel.name,
+  );
+
+  const schema = yup.object({
+    name: yup
+      .string()
+      .min(3)
+      .max(20)
+      .notOneOf(channelNames)
+      .required(),
+  });
+
+  const handleSubmit = async (
+    values,
+    { setSubmitting }
+  ) => {
+    try {
+      const channel = await dispatch(
+        addChannel(values.name),
+      ).unwrap();
+
+      dispatch(
+        setCurrentChannel(channel.id),
+      );
+
+      toast.success(
+        t('toast.channelCreated'),
+      );
+
+      dispatch(closeModal());
+    } catch (error) {
+      toast.error(
+        t('toast.networkError'),
+      );
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <Formik
+      initialValues={{
+        name: '',
+      }}
+      validationSchema={schema}
+      onSubmit={handleSubmit}
+    >
+      <Form>
+        <Field
+          name="name"
+          type="text"
+        />
+
+        <ErrorMessage
+          name="name"
+          component="div"
+        />
+
+        <button type="submit">
+          {t('channels.add')}
+        </button>
+      </Form>
+    </Formik>
+  );
+};

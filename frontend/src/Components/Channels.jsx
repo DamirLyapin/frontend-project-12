@@ -4,14 +4,14 @@ import { setCurrentChannel } from '../slices/chatSlice'
 import { openModal } from '../slices/modalSlice'
 import { useTranslation } from 'react-i18next';
 
-const { t } = useTranslation();
 
 export const Channels = () => {
+    const { t } = useTranslation();
     const dispatch = useDispatch()
     const channels = useSelector(
         (state) => state.chat.channels
     )
-    const setCurrentChannelId = useSelector(
+    const currentChannelId = useSelector(
         (state) => state.chat.CurrentChannelId
     )
     return (
@@ -20,15 +20,28 @@ export const Channels = () => {
                 <div key={channel.id}>
                     <button type='button'
                     className={
-                        channel.id = CurrentChannelId
+                        channel.id === CurrentChannelId
                             ? 'btn btn-secondary'
                             : 'btn'
                     }
                     onClick={() => 
-                        dispatch(setCurrentChannel(channel.id))
+                        dispatch(currentChannel(channel.id))
                     }>#{channel.name}</button>
                     {channel.removable && (
                         <>
+                            <button
+                                type="button"
+                                className={
+                                    channel.id === currentChannelId
+                                    ? 'btn btn-secondary'
+                                    : 'btn'
+                                }
+                                onClick={() =>
+                                    dispatch(setCurrentChannel(channel.id))
+                                }
+                                >
+                                # {channel.name}
+                            </button>
                             <button
                             onClick={() => 
                                 dispatch(
