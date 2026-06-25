@@ -7,18 +7,21 @@ import { MainPage } from './pages/MainPage';
 import { PrivateRoute } from './Components/PrivateRoute';
 import { SignupPage } from './pages/SignupPage';
 import { Header } from './Components/Header';
+import { ErrorBoundary } from '@rollbar/react'
 function App() {
   return (
-    <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path="/login" element={<AuthorizationPage />} />
-        <Route path="/" element={<PrivateRoute><MainPage /></PrivateRoute>} />
-        <Route path="*" element={<NotFoundPage />} />
-        <Route path="/signup" element={<SignupPage />}/>
-      </Routes>
-      <ToastContainer />
-    </BrowserRouter>
+    <ErrorBoundary>
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/login" element={<AuthorizationPage />} />
+          <Route path="/" element={<PrivateRoute><MainPage /></PrivateRoute>} />
+          <Route path="*" element={<NotFoundPage />} />
+          <Route path="/signup" element={<SignupPage />}/>
+        </Routes>
+        <ToastContainer />
+      </BrowserRouter>
+    </ErrorBoundary>
   );
 }
 export default App
