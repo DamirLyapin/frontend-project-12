@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import App from './App.jsx'
 import './i18n.js'
 import store from './app/store.js';
-import './initProfanity'
+import './initProfanify'
 import rollbar from './rollbar.js'
 import { Provider as RollbarProvider } from '@rollbar/react';
 createRoot(document.getElementById('root')).render(

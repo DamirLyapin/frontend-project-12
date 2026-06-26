@@ -1,4 +1,13 @@
+install:
+	npm ci
+
+start:
+	npm start
+
 build:
 	npm run build
-start:
-	npx start-server
+
+lint:
+	npx eslint 
+fix:
+	npx eslint . --fix

@@ -1,4 +1,13 @@
+install:
+	npm ci
+	cd frontend && npm install --production=false --legacy-peer-deps
+
 build:
-	npm run build
+	rm -rf frontend/dist
+	cd frontend && npm run build
+
 start:
-	npx start-server -s ./frontend
+	npx start-server -s ./frontend/dist
+
+lint:
+	npm run lint --prefix frontend
