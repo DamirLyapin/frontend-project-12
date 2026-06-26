@@ -1,27 +1,33 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css';
-import { NotFoundPage } from './pages/notFoundPage';
-import { AuthorizationPage } from './pages/authorizationPage';
-import { MainPage } from './pages/MainPage';
-import { PrivateRoute } from './Components/PrivateRoute';
-import { SignupPage } from './pages/SignupPage';
-import { Header } from './Components/Header';
-import { ErrorBoundary } from '@rollbar/react'
-function App() {
-  return (
-    <ErrorBoundary>
-      <BrowserRouter>
-        <Header />
-        <Routes>
-          <Route path="/login" element={<AuthorizationPage />} />
-          <Route path="/" element={<PrivateRoute><MainPage /></PrivateRoute>} />
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import ChatPage from './Components/Pages/ChatPage'
+import LoginPage from './Components/Pages/LoginPage'
+import Layout from './Components/Layout'
+import NotFoundPage from './Components/Pages/NotFoundPage'
+import SignupPage from './Components/Pages/SignupPage'
+import AuthRequire from './Hocs/AuthRequire'
+import AuthProvider from './Hocs/AuthProvider'
+import routes from './routes'
+
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './index.css'
+
+const App = () => (
+  <AuthProvider>
+    <BrowserRouter
+      future={{
+        v7_startTransition: true,
+        v7_relativeSplatPath: true,
+      }}
+    >
+      <Routes>
+        <Route path={routes.chatPagePath} element={<Layout />}>
+          <Route index element={<AuthRequire><ChatPage /></AuthRequire>} />
+          <Route path={routes.loginPagePath} element={<LoginPage />} />
+          <Route path={routes.signupPagePath} element={<SignupPage />} />
           <Route path="*" element={<NotFoundPage />} />
-          <Route path="/signup" element={<SignupPage />}/>
-        </Routes>
-        <ToastContainer />
-      </BrowserRouter>
-    </ErrorBoundary>
-  );
-}
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  </AuthProvider>
+)
 export default App

@@ -1,10 +1,12 @@
-import Rollbar from 'rollbar'
+const rollbarConfig = {
 
-const rollbar = new Rollbar({
-    accessToken: import.meta.env.VITE_ROLLBAR_ACCESS_TOKEN,
-    captureUncaught: true,
-    captureUnhandledRejections: true,
-    environment: 'production'
-})
+  accessToken: import.meta.env.VITE_ROLLBAR_TOKEN,
+  payload: {
+    environment: 'production',
+  },
+  captureUncaught: true,
+  captureUnhandledRejections: true,
+}
 
-export default rollbar
+export default rollbarConfig
+
